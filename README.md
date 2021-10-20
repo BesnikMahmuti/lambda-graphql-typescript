@@ -1,2 +1,1 @@
-# lambda-graphql-typescript
-Aws lambda graphql typescript boilerplate
+# Serverless - lambda-graphql-typescript
