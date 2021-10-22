@@ -13,7 +13,6 @@ import {
 import {
   ContextFunction,
   ApolloServerPluginLandingPageGraphQLPlayground,
-  gql,
 } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-lambda";
 
@@ -40,24 +39,8 @@ const graphqlHandler = (event, context, callback) => {
     };
   };
 
-  // Construct a schema, using GraphQL schema language
-  const typeDefs = gql`
-    type Query {
-      lambda: String
-    }
-  `;
-
-  // Provide resolver functions for your schema fields
-  // const resolvers = {
-  //   Query: {
-  //     lambda: () => "Hello from graphql lambda!",
-  //   },
-  // };
-
   const server = new ApolloServer({
     schema: createSchema(),
-    typeDefs,
-    // resolvers,
     context: buildApolloContext,
     formatError: (err) => {
       logger.error({
