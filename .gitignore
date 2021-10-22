@@ -105,3 +105,6 @@ dist
 
 # Mac generated file
 .DS_Store
+
+# Webpack generated build files
+.webpack/
