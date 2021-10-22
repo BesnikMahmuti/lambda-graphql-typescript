@@ -14,16 +14,20 @@
   "dependencies": {
     "@middy/core": "^1.5.2",
     "@middy/http-json-body-parser": "^1.5.2",
+    "@types/faker": "^5.5.9",
     "apollo-server-core": "^3.4.0",
     "apollo-server-lambda": "^3.4.0",
     "apollo-server-types": "^3.3.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "faker": "^5.5.3",
     "graphql": "^15.6.1",
     "reflect-metadata": "^0.1.13",
     "serverless-offline": "^8.2.0",
     "source-map-support": "^0.5.19",
-    "type-graphql": "^1.1.1"
+    "type-graphql": "^1.1.1",
+    "winston": "^3.3.3",
+    "winston-transport": "^4.4.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^2.23.0",

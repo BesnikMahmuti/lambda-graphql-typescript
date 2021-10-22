@@ -1,6 +1,7 @@
 import "source-map-support/register";
 
-// import createSchema from "./schema";
+import createSchema from "./schema";
+import logger from "@libs/logger";
 
 import {
   APIGatewayProxyEvent,
@@ -47,20 +48,29 @@ const graphqlHandler = (event, context, callback) => {
   `;
 
   // Provide resolver functions for your schema fields
-  const resolvers = {
-    Query: {
-      lambda: () => "Hello from graphql lambda!",
-    },
-  };
+  // const resolvers = {
+  //   Query: {
+  //     lambda: () => "Hello from graphql lambda!",
+  //   },
+  // };
 
   const server = new ApolloServer({
-    // schema: createSchema(),
+    schema: createSchema(),
     typeDefs,
-    resolvers,
+    // resolvers,
     context: buildApolloContext,
     formatError: (err) => {
-      console.log("errooooor", err);
+      logger.error({
+        message: err.message,
+        stack: err.extensions.exception.stacktrace,
+      });
       return err;
+    },
+    formatResponse: (response, context) => {
+      if (context.operationName !== "IntrospectionQuery") {
+        logger.info(JSON.stringify(response.data));
+      }
+      return response;
     },
     plugins: [
       ApolloServerPluginLandingPageGraphQLPlayground({
