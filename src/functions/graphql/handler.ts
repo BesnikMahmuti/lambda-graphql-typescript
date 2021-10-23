@@ -17,12 +17,15 @@ import {
 } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-lambda";
 import { PrismaClient } from ".prisma/client";
+import { verifyAndDecode } from "@utils/auth/jwt";
+import { JwtPayload } from "jsonwebtoken";
 
 export type ApolloContext = {
   headers: APIGatewayProxyEventHeaders;
   functionName: string;
   prisma: PrismaClient;
   event: APIGatewayProxyEvent | APIGatewayProxyEventV2;
+  user?: string | JwtPayload;
 };
 
 const graphqlHandler = (event, context, callback) => {
@@ -35,11 +38,17 @@ const graphqlHandler = (event, context, callback) => {
     ContextFunctionParams,
     ApolloContext
   > = async ({ event: buildEvent, context: buildContext }) => {
+    const user = verifyAndDecode(
+      buildEvent.headers.Authorization?.split(" ")[1] ||
+        buildEvent.headers.authorization?.split(" ")[1]
+    );
+
     return {
       headers: buildEvent.headers,
       functionName: buildContext.functionName,
       prisma,
       event: buildEvent,
+      user,
     };
   };
 

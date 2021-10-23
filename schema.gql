@@ -5,12 +5,21 @@
 
 input CreateUserInput {
   email: String
+  password: String!
 }
 
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
+
+type Login {
+  createdAt: DateTime!
+  email: String!
+  id: ID!
+  token: String!
+  updatedAt: DateTime!
+}
 
 type Mutation {
   createUser(input: CreateUserInput!): User!
@@ -25,6 +34,7 @@ type Profile {
 }
 
 type Query {
+  login(input: UserLoginInput!): Login!
   users: [User!]!
 }
 
@@ -32,6 +42,12 @@ type User {
   createdAt: DateTime!
   email: String!
   id: ID!
+  password: String!
   profile: Profile
   updatedAt: DateTime!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
 }

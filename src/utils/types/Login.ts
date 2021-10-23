@@ -1,17 +1,14 @@
-import { Field, ID, ObjectType } from "type-graphql";
 import { IsEmail } from "class-validator";
+import { Field, ID, ObjectType } from "type-graphql";
 
-@ObjectType("User")
-export default class User {
+@ObjectType("Login")
+export default class Login {
   @Field(() => ID)
   public id: string;
 
   @Field(() => String)
   @IsEmail()
   public email: string;
-
-  @Field(() => String)
-  public password: string;
 
   @Field(() => Date)
   public createdAt: Date | null;
