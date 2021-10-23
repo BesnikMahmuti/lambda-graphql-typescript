@@ -2,6 +2,7 @@ import "source-map-support/register";
 
 import createSchema from "./schema";
 import logger from "@libs/logger";
+import prisma from "../../../prisma/client";
 
 import {
   APIGatewayProxyEvent,
@@ -15,10 +16,12 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
 } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-lambda";
+import { PrismaClient } from ".prisma/client";
 
 export type ApolloContext = {
   headers: APIGatewayProxyEventHeaders;
   functionName: string;
+  prisma: PrismaClient;
   event: APIGatewayProxyEvent | APIGatewayProxyEventV2;
 };
 
@@ -35,6 +38,7 @@ const graphqlHandler = (event, context, callback) => {
     return {
       headers: buildEvent.headers,
       functionName: buildContext.functionName,
+      prisma,
       event: buildEvent,
     };
   };
@@ -48,12 +52,6 @@ const graphqlHandler = (event, context, callback) => {
         stack: err.extensions.exception.stacktrace,
       });
       return err;
-    },
-    formatResponse: (response, context) => {
-      if (context.operationName !== "IntrospectionQuery") {
-        logger.info(JSON.stringify(response.data));
-      }
-      return response;
     },
     plugins: [
       ApolloServerPluginLandingPageGraphQLPlayground({

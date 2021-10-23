@@ -7,8 +7,16 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: "2",
   custom: {
     webpack: {
-      webpackConfig: "./webpack.config.js",
-      includeModules: true,
+      webpackConfig: "webpack.config.js",
+      keepOutputDirectory: true,
+      includeModules: {
+        forceExclude: [".prisma", "aws-sdk"],
+      },
+      packagerOptions: {
+        scripts: [
+          "find ./node_modules/.prisma/client -type f -not -name 'query-engine-rhel-*' -name 'query-engine-*' -delete",
+        ],
+      },
     },
   },
   plugins: ["serverless-webpack", "serverless-offline"],

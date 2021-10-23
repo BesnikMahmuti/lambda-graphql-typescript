@@ -8,6 +8,7 @@
       "@utils": [
         "src/utils/index.ts"
       ],
+      "@prisma/*":["prisma/*"]
     }
   }
 }

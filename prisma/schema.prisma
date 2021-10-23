@@ -1,0 +1,31 @@
+generator client {
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = "postgres://besnikmahmuti@localhost:5432/besnikmahmuti?connection_limit=1"
+}
+
+model User {
+    id        String   @id @default(uuid())
+    email     String   @unique
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+    profile   Profile?
+
+    @@map("users")
+}
+
+model Profile {
+    id        String  @id @default(uuid())
+    firstName String  @default("") @map("first_name") @db.VarChar
+    lastName  String  @default("") @map("last_name") @db.VarChar
+    title     String? @db.VarChar
+    userId    String  @unique @map("user_id")
+    user      User    @relation(fields: [userId], references: [id])
+
+    @@index([userId], name: "index_profiles_on_user_id")
+    @@map("profiles")
+}

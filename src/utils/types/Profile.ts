@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 
 @ObjectType("Profile")
 export default class Profile {
@@ -6,8 +6,14 @@ export default class Profile {
   public id: string;
 
   @Field(() => String)
+  public firstName: string;
+
+  @Field(() => String)
+  public lastName: string;
+
+  @Field(() => String)
   public userId: string;
 
   @Field(() => String, { nullable: true })
-  public job: string | null;
+  public title: string | null;
 }

@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import { GraphQLSchema } from "graphql";
 import { buildSchemaSync } from "type-graphql";
-import TestResolver from "@utils/resolvers/Test";
+import User from "@utils/resolvers/User";
 
 const createSchema = (): GraphQLSchema => {
   const schema = buildSchemaSync({
-    resolvers: [TestResolver],
+    resolvers: [User],
     emitSchemaFile: true,
   });
 
