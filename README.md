@@ -1,6 +1,8 @@
 # Serverless - lambda-graphql-typescript
 
-## This is a boilerplate which can be used to basically have a graphql service which is served through a single `AWS lambda` function and uses Prisma ORM to communicate with the `postgress database`
+#### This is a boilerplate which can be used to basically have a graphql service which is served through a single `AWS lambda` function and uses Prisma ORM to communicate with the `postgress database`
+
+####
 
 ## Prisma
 
